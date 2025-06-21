@@ -1,6 +1,5 @@
 package com.SupportApplication.SupportApp.User.controller;
 
-import com.SupportApplication.SupportApp.Category.controller.CategoryController;
 import com.SupportApplication.SupportApp.User.dto.AuthRequest;
 import com.SupportApplication.SupportApp.User.dto.AuthResponse;
 import com.SupportApplication.SupportApp.User.model.User;
