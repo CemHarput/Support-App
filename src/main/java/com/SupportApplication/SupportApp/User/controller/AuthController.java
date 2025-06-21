@@ -42,27 +42,10 @@ public class AuthController {
         Authentication auth = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.username(), request.password())
         );
-        List<User> users=userRepository.findAll();
-        logger.debug("User List:",users);
         User user = userRepository.findByUsername(request.username()).orElseThrow();
 
-        UserDetails userDetails = new UserDetails() {
-            @Override
-            public Collection<? extends GrantedAuthority> getAuthorities() {
-                return null;
-            }
-
-            @Override
-            public String getPassword() {
-                return user.getUsername();
-            }
-
-            @Override
-            public String getUsername() {
-                return user.getPassword();
-            }
-        };
-        String token = jwtService.generateToken(userDetails);
+        logger.debug("user:",user);
+        String token = jwtService.generateToken(user);
         return ResponseEntity.ok(new AuthResponse(token));
     }
 }
