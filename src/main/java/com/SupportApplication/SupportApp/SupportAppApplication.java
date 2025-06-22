@@ -22,7 +22,7 @@ public class SupportAppApplication {
 
 
     @Bean
-    public CommandLineRunner loadData(CategoryRepository categoryRepository,UserRepository userRepository) {
+    public CommandLineRunner loadData(CategoryRepository categoryRepository, UserRepository userRepository) {
         return args -> {
             if (categoryRepository.count() == 0) {
                 categoryRepository.save(new Category("Network Issues"));
@@ -32,12 +32,14 @@ public class SupportAppApplication {
                 categoryRepository.save(new Category("Account Recovery"));
 
             }
-			String encodedUserPass = new BCryptPasswordEncoder().encode("user123");
-			String encodedAdminPass = new BCryptPasswordEncoder().encode("admin123");
+            String encodedUserPass = new BCryptPasswordEncoder().encode("user123");
+            String encodedAdminPass = new BCryptPasswordEncoder().encode("admin123");
+            String encodedUserPass1 = new BCryptPasswordEncoder().encode("user456");
 
+            userRepository.save(new User("user1", encodedUserPass1, Role.USER));
 
-			userRepository.save(new User("user", encodedUserPass, Role.USER));
-			userRepository.save(new User("admin", encodedAdminPass, Role.ADMIN));
+            userRepository.save(new User("user", encodedUserPass, Role.USER));
+            userRepository.save(new User("admin", encodedAdminPass, Role.ADMIN));
         };
     }
 

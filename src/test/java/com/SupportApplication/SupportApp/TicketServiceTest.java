@@ -9,11 +9,14 @@ import com.SupportApplication.SupportApp.Ticket.enums.TicketStatus;
 import com.SupportApplication.SupportApp.Ticket.model.Ticket;
 import com.SupportApplication.SupportApp.Ticket.repository.TicketRepository;
 import com.SupportApplication.SupportApp.Ticket.service.TicketService;
+import com.SupportApplication.SupportApp.User.model.User;
+import com.SupportApplication.SupportApp.User.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,25 +33,39 @@ import static org.mockito.Mockito.*;
     @Mock
     private CategoryRepository categoryRepository;
 
+    @Mock
+    private UserRepository userRepository;
+
     @InjectMocks
     private TicketService ticketService;
 
-    /*@Test
+    @Test
     void shouldCreateTicketSuccessfully() {
+        // Arrange
         AddTicketRequestDTO dto = new AddTicketRequestDTO("Başlık", "Açıklama", 1L);
+
         Category category = new Category();
         category.setName("Test Category");
 
+        User user = new User();
+        user.setUsername("testuser");
+
         Ticket savedTicket = new Ticket();
 
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getName()).thenReturn("testuser");
+
+        when(userRepository.findByUsername("testuser")).thenReturn(Optional.of(user));
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
         when(ticketRepository.save(any(Ticket.class))).thenReturn(savedTicket);
 
-       // Long id = ticketService.createTicket(dto);
+        Long id = ticketService.createTicket(dto, authentication);
 
+        verify(authentication).getName();
+        verify(userRepository).findByUsername("testuser");
         verify(categoryRepository).findById(1L);
         verify(ticketRepository).save(any(Ticket.class));
-    }*/
+    }
     @Test
     void shouldAddAnswerAndUpdateStatus() {
         AddAnswerTicketDTO dto = new AddAnswerTicketDTO(100L, "Yanıt içerik");

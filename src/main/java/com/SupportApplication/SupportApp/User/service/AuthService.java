@@ -22,7 +22,9 @@ public class AuthService implements UserDetailsService {
 
         String encodedUserPass = new BCryptPasswordEncoder().encode("user123");
         String encodedAdminPass = new BCryptPasswordEncoder().encode("admin123");
+        String encodedUserPass1 = new BCryptPasswordEncoder().encode("user456");
 
+        users.put("user1", new User("user1", encodedUserPass1, Role.USER));
         users.put("user", new User("user", encodedUserPass, Role.USER));
         users.put("admin",new User("admin", encodedAdminPass, Role.ADMIN));
     }
