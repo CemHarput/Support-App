@@ -43,7 +43,7 @@ public class TicketController {
             return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PatchMapping("/{ticketId}/answer")
+    @PatchMapping("/tickets/answer")
     public ResponseEntity<ApiResponse> addAnswer(
             @RequestBody AddAnswerTicketDTO addAnswerTicketDTO) {
         ticketService.addAnswerToTicket(addAnswerTicketDTO);
