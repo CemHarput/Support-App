@@ -25,3 +25,13 @@ Bu proje, kullanıcıların destek talepleri oluşturabildiği ve adminlerin bu 
 
 ```bash
 ./mvnw spring-boot:run
+
+## 👤 Varsayılan Kullanıcılar
+
+Uygulama ilk başladığında aşağıdaki kullanıcılar otomatik olarak oluşturulur:
+
+| Username | Password   | Role       |
+|----------|------------|------------|
+| user     | user123    | ROLE_USER  |
+| user1    | user456    | ROLE_USER  |
+| admin    | admin123   | ROLE_ADMIN |
