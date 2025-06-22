@@ -3,6 +3,7 @@ package com.SupportApplication.SupportApp.Ticket.model;
 import com.SupportApplication.SupportApp.Category.model.Category;
 import com.SupportApplication.SupportApp.Common.BaseEntity;
 import com.SupportApplication.SupportApp.Ticket.enums.TicketStatus;
+import com.SupportApplication.SupportApp.User.model.User;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -12,7 +13,7 @@ public class Ticket extends BaseEntity {
     private String heading;
     private String description;
 
-    @Transient // persist etme, sadece runtime'da kullan
+    @Transient
     private TicketStatusState state = new OpenState();
 
     @Enumerated(EnumType.STRING)
@@ -24,6 +25,11 @@ public class Ticket extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     public Ticket() {
         initializeState();
@@ -88,6 +94,14 @@ public class Ticket extends BaseEntity {
     }
     public void setRawAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

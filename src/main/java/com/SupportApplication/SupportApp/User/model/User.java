@@ -1,6 +1,7 @@
 package com.SupportApplication.SupportApp.User.model;
 
 import com.SupportApplication.SupportApp.Common.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "app_users")
 public class User extends BaseEntity implements UserDetails {
+    @Column(unique = true)
     private String username;
     private String password;
     private Role role;

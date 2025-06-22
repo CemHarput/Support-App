@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,11 +29,11 @@ public class TicketController {
         this.ticketService = ticketService;
     }
     @PostMapping("/tickets")
-    public ResponseEntity<ApiResponse> createTicket(@RequestBody AddTicketRequestDTO addTicketRequestDTO) {
+    public ResponseEntity<ApiResponse> createTicket(@RequestBody AddTicketRequestDTO addTicketRequestDTO,Authentication authentication) {
         try {
             logger.debug("createTicket is started");
 
-            Long ticketId = ticketService.createTicket(addTicketRequestDTO);
+            Long ticketId = ticketService.createTicket(addTicketRequestDTO,authentication);
             logger.info("Ticket created successfully with ID: {}", ticketId);
 
             ApiResponse response = new ApiResponse("Ticket created with ID: " + ticketId, HttpStatus.CREATED.value());
@@ -60,6 +61,10 @@ public class TicketController {
         ticketService.updateTicketState(updateTicketStatusDTO);
         return ResponseEntity.ok(new ApiResponse("Ticket status updated",200));
 
+    }
+    @GetMapping("/tickets/user")
+    public List<TicketDTO> getTicketsForLoggedInUser(Authentication authentication) {
+        return ticketService.getTicketsForUser(authentication.getName());
     }
 
 }
