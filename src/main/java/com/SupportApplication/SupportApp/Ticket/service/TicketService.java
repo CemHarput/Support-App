@@ -10,6 +10,7 @@ import com.SupportApplication.SupportApp.Exception.EntityNotFoundException;
 import com.SupportApplication.SupportApp.Ticket.dto.AddAnswerTicketDTO;
 import com.SupportApplication.SupportApp.Ticket.dto.AddTicketRequestDTO;
 import com.SupportApplication.SupportApp.Ticket.dto.TicketDTO;
+import com.SupportApplication.SupportApp.Ticket.dto.UpdateTicketStatusDTO;
 import com.SupportApplication.SupportApp.Ticket.enums.TicketStatus;
 import com.SupportApplication.SupportApp.Ticket.model.Ticket;
 import com.SupportApplication.SupportApp.Ticket.repository.TicketRepository;
@@ -62,5 +63,11 @@ public class TicketService {
         return tickets.stream()
                 .map(TicketDTO::convertFromTicket)
                 .toList();
+    }
+    public void updateTicketState(UpdateTicketStatusDTO updateTicketStatusDTO){
+        Ticket ticket = ticketRepository.findById(updateTicketStatusDTO.ticketId())
+                .orElseThrow(() -> new EntityNotFoundException("Ticket not found with id: " + updateTicketStatusDTO.ticketId()));
+        ticket.updateStatus(TicketStatus.valueOf(updateTicketStatusDTO.status()));
+        ticketRepository.save(ticket);
     }
 }

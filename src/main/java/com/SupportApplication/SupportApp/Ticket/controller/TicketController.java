@@ -4,6 +4,7 @@ import com.SupportApplication.SupportApp.Common.DTO.ApiResponse;
 import com.SupportApplication.SupportApp.Ticket.dto.AddAnswerTicketDTO;
 import com.SupportApplication.SupportApp.Ticket.dto.AddTicketRequestDTO;
 import com.SupportApplication.SupportApp.Ticket.dto.TicketDTO;
+import com.SupportApplication.SupportApp.Ticket.dto.UpdateTicketStatusDTO;
 import com.SupportApplication.SupportApp.Ticket.service.TicketService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,12 @@ public class TicketController {
     public ResponseEntity<List<TicketDTO>> getAllTickets() {
         List<TicketDTO> ticketList = ticketService.getAllTickets();
         return ResponseEntity.ok(ticketList);
+    }
+    @PatchMapping("/tickets/status")
+    public ResponseEntity<ApiResponse> updateTicketStatus(@RequestBody UpdateTicketStatusDTO updateTicketStatusDTO){
+        ticketService.updateTicketState(updateTicketStatusDTO);
+        return ResponseEntity.ok(new ApiResponse("Ticket status updated",200));
+
     }
 
 }
